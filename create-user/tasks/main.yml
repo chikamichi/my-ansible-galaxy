@@ -1,0 +1,6 @@
+---
+- name: create user {{name}}
+  user: name="{{name}}"
+        password="{{password}}"
+        comment="{{comment}}"
+        groups="{{user_groups}}"

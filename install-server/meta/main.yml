@@ -1,0 +1,9 @@
+---
+dependencies:
+  - role: create-user
+    name: "{{user_name}}"
+    password: "{{user_password}}"
+    comment: "{{user_comment}}"
+    user_groups: "{{user_groups}}"
+  - base-packages
+  - add-ssh-keys-from-github

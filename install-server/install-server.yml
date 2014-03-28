@@ -1,0 +1,27 @@
+---
+# Inits a blank server. Useful to build a fully-fledged server from the
+# ground up.
+#
+# This creates a user account with admin access, and fetches SSH keys from Github.
+#
+# Next steps are to be handled by dedicated roles, as illustrated below.
+#
+# Replace #__variables__ by their actual values.
+- hosts: #__host__
+  remote_user: root
+
+  vars:
+    user_name: #__user_name__
+    user_comment: #__user_comment__
+    user_password: #__user_password__
+    user_groups: #'root,sudo'
+    add_ssh_keys_from_github:
+      usernames: #['foo', 'bar']
+      owner: #__user_name__
+
+  roles:
+    - install-server
+    #- webserver
+    #- mysql
+    #- wordpress
+    #- ...

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+SOURCE="."
+DEST=$HOME/"/ansible/roles"
+
+for dir in $(find $SOURCE -mindepth 1 -maxdepth 1 -type d)
+do
+  rm -f $DEST/${dir##*/}
+  ln -s `pwd`/${dir##*/} $DEST/
+done
+
+exit

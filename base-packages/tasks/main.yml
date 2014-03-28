@@ -1,0 +1,11 @@
+---
+# httplib2 is required in order to use ansible's uri module
+- name: install httplib2
+  sudo: true
+  apt: pkg="{{python_pkg_prefix}}-httplib2"
+
+#- name: install some common ground
+  #apt: pkg=$item state=installed update-cache=yes
+  #with_items:
+    #- build-essential
+    #- git-core
