@@ -1,8 +1,7 @@
 Server installation performed by Ansible
-========================================
+----------------------------------------
 
-Bootstrapping a new, empty server
----------------------------------
+### Bootstrapping a new, empty, Debian-like server
 
 The one and only playbook here is `install-server.yml`. When bootstrapping a
 new project, it should be copied over to

@@ -1,8 +1,7 @@
 Server installation performed by Ansible
-========================================
+----------------------------------------
 
-Creating users
---------------
+### Creating users
 
 I always need to create users at some point.
 
