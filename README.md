@@ -11,11 +11,13 @@ Although they are not relevant as [ansible-galaxy](https://galaxy.ansible.com/)
 roles (too specific), they may prove useful to some people.
 
 Each roles is documented on its own, feel free to investigate subfolders. In
-typical order of apparition:
+typical order of apparition/dependence:
 
 * [install-server](https://github.com/chikamichi/my-ansible-galaxy/tree/master/install-server) (main playbook, check for general usage instructions)
-    1. [create-user](https://github.com/chikamichi/my-ansible-galaxy/tree/master/create-user)
-    2. [base-packages](https://github.com/chikamichi/my-ansible-galaxy/tree/master/base-packages)
+    * [create-user](https://github.com/chikamichi/my-ansible-galaxy/tree/master/create-user)
+    * [base-packages](https://github.com/chikamichi/my-ansible-galaxy/tree/master/base-packages)
+        * [webserver](https://github.com/chikamichi/my-ansible-galaxy/tree/master/webserver)
+            * [wordpress](https://github.com/chikamichi/my-ansible-galaxy/tree/master/wordpress)
 
 ### Interested in using it? Installing locally
 
