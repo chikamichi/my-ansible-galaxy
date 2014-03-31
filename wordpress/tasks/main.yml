@@ -1,0 +1,25 @@
+---
+- name: Wordpress | Download Wordpress
+  get_url: url=http://wordpress.org/wordpress-{{ wp_version }}.tar.gz dest=/srv/www/wordpress-{{ wp_version }}.tar.gz
+           sha256sum="{{ wp_sha256sum }}"
+
+- name: Wordpress | Extract archive
+  command: chdir=/srv/www/ /bin/tar xvf wordpress-{{ wp_version }}.tar.gz
+
+- name: Wordpress | Fetch random salts for Wordpress config
+  local_action: command curl https://api.wordpress.org/secret-key/1.1/salt/
+  register: "wp_salt"
+  sudo: no
+
+- name: Wordpress | Copy own config file
+  template: src=wp-config.php dest=/srv/www/wordpress/
+
+- name: Wordpress | Set access rights for config file
+  file: path=/srv/www/wordpress/wp-config.php owner=www-data
+
+- name: Wordpress | Copy Nginx config file
+  template: src=nginx-wordpress dest=/etc/nginx/sites-available/wordpress
+
+- name: Wordpress | Activating Nginx config
+  file: src=/etc/nginx/sites-available/wordpress dest=/etc/nginx/sites-enabled/wordpress state=link
+  notify: restart nginx
