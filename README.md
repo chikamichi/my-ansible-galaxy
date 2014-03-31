@@ -3,7 +3,9 @@ Server installation performed by Ansible
 
 ### Synopsys
 
-These are some [ansible](http://www.ansible.com) roles I use on my projects.
+These are some [ansible](http://www.ansible.com) roles I wrote for my projects.
+
+I use them to spawn new *Debian* servers.
 
 Although they are not relevant as [ansible-galaxy](https://galaxy.ansible.com/)
 roles (too specific), they may prove useful to some people.
