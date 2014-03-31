@@ -7,3 +7,9 @@ dependencies:
     user_groups: "{{user_groups}}"
   - chikamichi.base-packages
   - add-ssh-keys-from-github
+  - role: knopki.sudoers
+    sudoers_filename: "{{user_name}}"
+    sudoers:
+      - name: "{{user_name}}"
+        users:
+          - ALL

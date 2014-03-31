@@ -24,3 +24,4 @@ The playbook has several nested dependencies; in order:
         - Ansibles.git
             - Ansibles.build-essential
     - add-ssh-keys-from-github
+    - knopki.sudoers
