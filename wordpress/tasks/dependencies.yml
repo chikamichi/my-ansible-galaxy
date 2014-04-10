@@ -3,5 +3,6 @@
   apt: pkg={{item}} state=installed
   with_items:
     - php5-gd
+    - php5-mcrypt
 
 - include: phpmyadmin.yml
