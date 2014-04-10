@@ -10,3 +10,10 @@
     - build-essential
     - git-core
     - unzip
+
+- name: configure SSHD (port)
+  lineinfile: dest=/etc/ssh/sshd_config
+              regexp='^Port (\d+)'
+              line='Port 21024'
+              backrefs=yes
+  notify: restart ssh
