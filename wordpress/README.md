@@ -20,7 +20,7 @@ mysql_users:
 wp_db_name: wp
 wp_db_user: wp_user
 wp_db_password: pass
-wp_db_prefix: some_prefix
+wp_db_prefix: change_me_
 wp_server_name: example.com # or an IP address
 ```
 
