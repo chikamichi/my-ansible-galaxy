@@ -1,7 +1,7 @@
 ---
 # Which version of Wordpress to deploy.
-wp_version: 3.6
-wp_sha256sum: cf3dac69cd1810d8f4880b2c982fee869a0c56e1c4f793bbfc6d7021fd6da97c
+wp_version: 3.8.1
+wp_db_prefix: change_me_
 
 # These are the Wordpress database settings.
 wp_db_name: wordpress
@@ -13,3 +13,25 @@ mysql_port: 3306
 
 # This is used for the nginx server configuration.
 wp_server_name: www.example.com
+wp_theme: change_me
+
+wp_update_template: "update {{wp_db_name}}.{{wp_db_prefix}}options set option_value = \"{{wp_theme_name}}\" where option_name = \"template\""
+wp_update_stylesheet: "update {{wp_db_name}}.{{wp_db_prefix}}options set option_value = \"{{wp_theme_name}}\" where option_name = \"stylesheet\""
+wp_update_current_theme: "update {{wp_db_name}}.{{wp_db_prefix}}options set option_value = \"{{wp_theme_name}}\" where option_name = \"current_theme\""
+
+# Free plugins from wordpress' repository.
+wp_free_plugins:
+  - advanced-custom-fields
+  - contact-form-7.3.7.2
+  - adminimize.1.8.4
+  - tinymce-advanced.3.5.9.1
+  - wordpress-importer.0.6.1
+  - wysija-newsletters.2.6.1
+  - really-simple-captcha.1.8
+  - admin-menu-editor.1.3.2
+
+# Pierre Lacroux owns several charged plugins/add-ons.
+wp_charged_plugins:
+  - "{{wp_private_repository}}/plugins/acf-flexible-content.zip"
+  - "{{wp_private_repository}}/plugins/acf-gallery.zip"
+  - "{{wp_private_repository}}/plugins/acf-repeater.zip"

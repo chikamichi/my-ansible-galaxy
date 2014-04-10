@@ -1,0 +1,14 @@
+---
+# Very dumb way to check whether WP is installed.
+- name: Wordpress | Check whether is already installed
+  stat: path=/srv/www/wordpress/wp-config.php
+  register: wp
+
+- include: wordpress_base.yml
+  when: not wp.stat.exists
+
+- include: wordpress_plugins.yml
+  when: not wp.stat.exists
+
+- include: wordpress_theme.yml
+  when: not wp.stat.exists

@@ -1,0 +1,18 @@
+server {
+        # TODO: add this when we have the domain
+        server_name {{wp_server_name}};
+        listen 81;
+
+        root /srv/www/phpmyadmin;
+
+        index index.php;
+
+        location ~ \.php$ {
+                # 0-day exploit
+                try_files $uri =404;
+
+                include fastcgi.conf;
+                fastcgi_intercept_errors on;
+                fastcgi_pass php;
+        }
+}

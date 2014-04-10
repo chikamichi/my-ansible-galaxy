@@ -1,0 +1,40 @@
+---
+- name: Wordpress | Theme | Remove default themes
+  file: path=/srv/www/wordpress/wp-content/themes/{{item}} state=absent
+  with_items:
+    - twentyfourteen
+    - twentythirteen
+    - twentytwelve
+
+- name: Wordpress | Theme | Fetch our base theme
+  get_url: >
+    url={{wp_theme_base_url}}
+    dest=/srv/www/wordpress/wp-content/themes/
+
+- name: Wordpress | Theme | Remove any previous base theme
+  file: path=/srv/www/wordpress/wp-content/themes/{{item}} state=absent
+  with_items:
+    - "{{wp_theme_name}}"
+    - "{{wp_theme_base_name}}"
+
+- name: Wordpress | Theme | Extract our base theme
+  command: chdir=/srv/www/wordpress/wp-content/themes unzip -qo {{wp_theme_base_name}}.zip
+
+- name: Wordpress | Theme | Install our base theme
+  command: chdir=/srv/www/wordpress/wp-content/themes mv {{wp_theme_base_name}} {{wp_theme_name}}
+
+- name: Wordpress | Theme | Set our base theme as the default one
+  command: "{{item}}"
+  with_items:
+    - "mysql -u {{wp_db_user}} -h localhost --password={{wp_db_password}} -e '{{wp_update_template}}'"
+    - "mysql -u {{wp_db_user}} -h localhost --password={{wp_db_password}} -e '{{wp_update_stylesheet}}'"
+    - "mysql -u {{wp_db_user}} -h localhost --password={{wp_db_password}} -e '{{wp_update_current_theme}}'"
+
+- name: Wordpress | Theme | Cleanup themes folder (1)
+  file: path=/srv/www/wordpress/wp-content/themes/{{wp_theme_base_name}} state=absent
+
+- name: Wordpress | Theme | Cleanup themes folder (2)
+  file: path=/srv/www/wordpress/wp-content/themes/{{wp_theme_base_name}}.zip state=absent
+
+- name: Wordpress | Theme | Cleanup themes folder (3)
+  file: path=/srv/www/wordpress/wp-content/themes/__MACOSX state=absent

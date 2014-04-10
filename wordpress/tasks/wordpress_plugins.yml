@@ -1,0 +1,14 @@
+---
+- name: Wordpress | Plugins | Remove Hello Dolly plugin
+  file: path=/srv/www/wordpress/wp-content/plugins/hello.php state=absent
+
+- name: Wordpress | Plugins | Fetch free plugins
+  get_url: url=http://downloads.wordpress.org/plugin/{{item}}.zip dest=/srv/www/wordpress/wp-content/plugins
+  with_items: wp_free_plugins
+
+- name: Wordpress | Plugins | Fetch charged plugins
+  get_url: url={{item}} dest=/srv/www/wordpress/wp-content/plugins
+  with_items: wp_charged_plugins
+
+- name: Wordpress | Plugins | Install plugins
+  command: chdir=/srv/www/wordpress/wp-content/plugins unzip -qo *.zip

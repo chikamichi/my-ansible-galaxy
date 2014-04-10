@@ -1,0 +1,33 @@
+---
+- name: Wordpress | phpMyAdmin | Check whether is already installed
+  stat: path=/srv/www/phpmyadmin
+  register: p
+
+- name: Wordpress | phpMyAdmin | Download
+  get_url: url=http://sourceforge.net/projects/phpmyadmin/files/phpMyAdmin/4.1.12/phpMyAdmin-4.1.12-all-languages.tar.gz dest=/srv/www/phpmyadmin.tar.gz
+  when: p.stat.isdir is not defined
+
+- name: Wordpress | phpMyAdmin | Extract
+  command: chdir=/srv/www/ /bin/tar xvf phpmyadmin.tar.gz
+  when: p.stat.isdir is not defined
+
+- name: Wordpress | phpMyAdmin | Rename folder
+  command: chdir=/srv/www/ mv phpMyAdmin-4.1.12-all-languages phpmyadmin
+  when: p.stat.isdir is not defined
+
+- name: Wordpress | phpMyAdmin | Activate
+  command: chdir=/srv/www/phpmyadmin/ mv config.sample.inc.php config.inc.php
+  when: p.stat.isdir is not defined
+
+- name: Wordpress | phpMyAdmin | Configure (1)
+  lineinfile: dest=/srv/www/phpmyadmin/config.inc.php
+              regexp="^(?P<line>.+)'cookie';"
+              line="\g<line>'http';"
+              backrefs=yes
+
+- name: Wordpress | phpMyAdmin | Copy Nginx config file
+  template: src=nginx-phpmyadmin dest=/etc/nginx/sites-available/phpmyadmin
+
+- name: Wordpress | phpMyAdmin | Activate Nginx config
+  file: src=/etc/nginx/sites-available/phpmyadmin dest=/etc/nginx/sites-enabled/phpmyadmin state=link
+  notify: restart nginx

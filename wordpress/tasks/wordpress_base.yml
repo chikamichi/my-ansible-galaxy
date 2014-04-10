@@ -1,0 +1,31 @@
+---
+- name: Wordpress | Download archive
+  get_url: url=http://fr.wordpress.org/wordpress-{{ wp_version }}-fr_FR.tar.gz dest=/srv/www/wordpress-{{ wp_version }}.tar.gz
+
+# The archive contains a folder named "wordpress", so all is good.
+- name: Wordpress | Extract archive
+  command: chdir=/srv/www/ /bin/tar xvf wordpress-{{ wp_version }}.tar.gz
+
+- name: Wordpress | Sets folders/files rights
+  command: cd /srv/www/wordpress && chown www-data -R * && chgrp www-data -R * && chmod 755 -R * && chmod 644 wp-content/index.php
+
+- name: Wordpress | Fetch random salts for the config file
+  local_action: command curl https://api.wordpress.org/secret-key/1.1/salt/
+  register: "wp_salt"
+  sudo: no
+
+- name: Wordpress | Copy our own config file
+  template: src=wp-config.php dest=/srv/www/wordpress/
+
+- name: Wordpress | Set access rights for the config file
+  file: path=/srv/www/wordpress/wp-config.php owner=www-data
+
+- name: Wordpress | Base | Create debug.log
+  file: path=/srv/www/wordpress/wp-content/debug.log mode=775
+
+- name: Wordpress | Copy Nginx config file
+  template: src=nginx-wordpress dest=/etc/nginx/sites-available/wordpress
+
+- name: Wordpress | Activate Nginx config
+  file: src=/etc/nginx/sites-available/wordpress dest=/etc/nginx/sites-enabled/wordpress state=link
+  notify: restart nginx
