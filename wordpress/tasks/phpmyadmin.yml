@@ -19,11 +19,18 @@
   command: chdir=/srv/www/phpmyadmin/ mv config.sample.inc.php config.inc.php
   when: p.stat.isdir is not defined
 
-- name: Wordpress | phpMyAdmin | Configure (1)
+- name: Wordpress | phpMyAdmin | Configure
   lineinfile: dest=/srv/www/phpmyadmin/config.inc.php
               regexp="^(?P<line>.+)'cookie';"
               line="\g<line>'http';"
               backrefs=yes
+
+- name: Wordpress | phpMyAdmin | Activate PMA tracking
+  lineinfile: dest=/srv/www/phpmyadmin/config.inc.php
+             regexp="^// (?P<line>.+)(?P<tracking>'pma__tracking';)"
+             line="\g<line>\g<tracking>"
+             backrefs=yes
+  notify: restart nginx
 
 - name: Wordpress | phpMyAdmin | Copy Nginx config file
   template: src=nginx-phpmyadmin dest=/etc/nginx/sites-available/phpmyadmin
