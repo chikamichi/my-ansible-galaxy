@@ -7,6 +7,8 @@ dependencies:
       - php5-enchant
       - php5-mysql
       - php5-xmlrpc
+      - php5-gd
+      - php5-mcrypt
     fpm_pools:
       - pool:
           name: wordpress
