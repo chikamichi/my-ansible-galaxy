@@ -1,0 +1,6 @@
+---
+- name: Webserver | Ensure /srv/ group is www-data
+  command: chgrp www-data /srv/
+
+- name: Webserver | Ensure /srv/www/ is automatically mapped to the www-data group
+  command: chmod g+s /srv/www/
