@@ -30,6 +30,11 @@
     - "mysql -u {{wp_db_user}} -h localhost --password={{wp_db_password}} -e '{{wp_update_stylesheet}}'"
     - "mysql -u {{wp_db_user}} -h localhost --password={{wp_db_password}} -e '{{wp_update_current_theme}}'"
 
+- name: Wordpress | Theme | Set defaults permissions
+  command: "setfacl -d -m u:{{ansible_ssh_user}}:rwx -m g:www-data:rwx -m o::r-x {{item}}"
+  with_items:
+    - /srv/www/wordpress/wp-content/themes/{{wp_theme_name}}
+
 - name: Wordpress | Theme | Cleanup themes folder (1)
   file: path=/srv/www/wordpress/wp-content/themes/{{wp_theme_base_name}} state=absent
 

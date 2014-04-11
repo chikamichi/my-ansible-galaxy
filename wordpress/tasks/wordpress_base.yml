@@ -6,8 +6,28 @@
 - name: Wordpress | Extract archive
   command: chdir=/srv/www/ /bin/tar xvf wordpress-{{ wp_version }}.tar.gz
 
+- name: Wordpress | Ensure /srv/www/wordpress is owned by the www-data group
+  command: "{{item}}"
+  with_items:
+    - chmod g+s /srv/www/wordpress
+    - find /srv/www/wordpress -type d -exec chmod g+s {} \;
+
+- name: Wordpress | Set defaults permissions
+  command: "setfacl -d -m u:{{ansible_ssh_user}}:rwx -m g:www-data:rwx -m o::r-x {{item}}"
+  with_items:
+    - /srv/www/wordpress
+    - /srv/www/wordpress/wp-content
+    - /srv/www/wordpress/wp-content/themes
+
+- name: Wordpress | Set owner
+  file: path=/srv/www/wordpress owner={{ansible_ssh_user}} mode=0755 recurse=yes
+
 - name: Wordpress | Sets folders/files rights
-  command: cd /srv/www/wordpress && chown www-data -R * && chgrp www-data -R * && chmod 755 -R * && chmod 644 wp-content/index.php
+  command: "{{item}} chdir=/srv/www/wordpress"
+  with_items:
+    - "chown {{ansible_ssh_user}} -R *"
+    - "chmod 755 -R *"
+    - "chmod 644 wp-content/index.php"
 
 - name: Wordpress | Fetch random salts for the config file
   local_action: command curl https://api.wordpress.org/secret-key/1.1/salt/
