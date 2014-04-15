@@ -26,7 +26,7 @@
   file: path=/srv/www/wordpress owner={{ansible_ssh_user}} mode=0755 recurse=yes
 
 - name: Wordpress | Sets folders/files rights
-  command: "{{item}} chdir=/srv/www/wordpress"
+  shell: "{{item}} chdir=/srv/www/wordpress"
   with_items:
     - "chown {{ansible_ssh_user}} -R *"
     - "chmod 755 -R *"
