@@ -21,7 +21,7 @@
   command: chdir=/srv/www/wordpress/wp-content/themes unzip -qo {{wp_theme_base_name}}.zip
 
 - name: Wordpress | Theme | Install our base theme
-  command: chdir=/srv/www/wordpress/wp-content/themes mv {{wp_theme_base_name}} {{wp_theme_name}}
+  command: chdir=/srv/www/wordpress/wp-content/themes mv {{wp_theme_base_name}} {{wp_theme_name}}.base
 
 #- pause: prompt="Go to http://localhost:8080/wp-admin/install.php and complete installation"
 
@@ -35,7 +35,7 @@
 - name: Wordpress | Theme | Set defaults permissions
   command: "setfacl -d -m u:{{ansible_ssh_user}}:rwx -m g:www-data:rwx -m o::r-x {{item}}"
   with_items:
-    - /srv/www/wordpress/wp-content/themes/{{wp_theme_name}}
+    - /srv/www/wordpress/wp-content/themes/{{wp_theme_name}}.base
 
 - name: Wordpress | Theme | Cleanup themes folder (1)
   file: path=/srv/www/wordpress/wp-content/themes/{{wp_theme_base_name}} state=absent
