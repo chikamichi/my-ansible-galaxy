@@ -1,6 +1,6 @@
 ---
 # Which version of Wordpress to deploy.
-wp_version: 3.8.1
+wp_version: 3.8.3
 wp_db_prefix: change_me_
 
 # These are the Wordpress database settings.
