@@ -12,6 +12,9 @@
     - chmod g+s /srv/www/wordpress
     - find /srv/www/wordpress -type d -exec chmod g+s {} \;
 
+- name: Wordpress | Base | Make sure debug.log exists
+  command: touch /srv/www/wordpress/wp-content/debug.log
+
 - name: Wordpress | Set defaults permissions
   command: "setfacl -d -m u:{{ansible_ssh_user}}:rwx -m g:www-data:rwx -m o::r-x {{item}}"
   with_items:
@@ -39,9 +42,6 @@
 
 - name: Wordpress | Set access rights for the config file
   file: path=/srv/www/wordpress/wp-config.php owner=www-data
-
-- name: Wordpress | Base | Create debug.log
-  file: path=/srv/www/wordpress/wp-content/debug.log mode=775
 
 - name: Wordpress | Copy Nginx config file
   template: src=nginx-wordpress dest=/etc/nginx/sites-available/wordpress
