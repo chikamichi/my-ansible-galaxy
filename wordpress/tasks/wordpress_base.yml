@@ -49,3 +49,19 @@
 - name: Wordpress | Activate Nginx config
   file: src=/etc/nginx/sites-available/wordpress dest=/etc/nginx/sites-enabled/wordpress state=link
   notify: restart nginx
+
+- name: Wordpress | Base | Prepare GithubHook (1)
+  file: dest=/srv/www/wordpress/{{item}} owner={{ansible_ssh_user}} group={{ansible_ssh_user}} state=directory
+  with_items:
+    - git
+    - git/endpoint
+    - git/code
+
+- name: Wordpress | Base | Prepare GithubHook (2)
+  shell: "git init chdir=/srv/www/wordpress/git/code"
+
+- name: Wordpress | Base | Prepare GithubHook (3)
+  template: src="{{item}}" dest=/src/www/wordpress/endpoint
+  with_items:
+    - class.GitHubHook.php
+    - hook.php
