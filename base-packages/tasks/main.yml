@@ -11,6 +11,7 @@
     - build-essential
     - git-core
     - unzip
+    - curl
 
 - name: configure SSHD (port)
   lineinfile: dest=/etc/ssh/sshd_config
