@@ -61,7 +61,13 @@
   shell: "git init chdir=/srv/www/wordpress/git/code"
 
 - name: Wordpress | Base | Prepare GithubHook (3)
-  template: src="{{item}}" dest=/src/www/wordpress/endpoint
+  template: src="{{item}}" dest=/srv/www/wordpress/git/endpoint
+  with_items:
+    - class.GitHubHook.php
+    - hook.php
+
+- name: Wordpress | Base | Prepare GitHubHook (4)
+  file: path=/srv/www/wordpress/git/endpoint/{{item}} owner={{ansible_ssh_user}} group={{ansible_ssh_user}} mode=0775
   with_items:
     - class.GitHubHook.php
     - hook.php

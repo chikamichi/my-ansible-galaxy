@@ -11,10 +11,18 @@
     url={{wp_theme_base_url}}
     dest=/srv/www/wordpress/wp-content/themes/
 
+#- name: Wordpress | Theme | Remove any previous base theme
+  #file: path=/srv/www/wordpress/wp-content/themes/{{item}} state=absent
+  #with_items:
+    #- "{{wp_theme_name}}"
+    #- "{{wp_theme_base_name}}"
+
+# wp_theme_name folder is a synced_folder for vagrant, so it can't be deleted
+# at runtime.
+# TODO: add tags to exclude tasks from vagrant provisioning
 - name: Wordpress | Theme | Remove any previous base theme
   file: path=/srv/www/wordpress/wp-content/themes/{{item}} state=absent
   with_items:
-    - "{{wp_theme_name}}"
     - "{{wp_theme_base_name}}"
 
 - name: Wordpress | Theme | Extract our base theme
