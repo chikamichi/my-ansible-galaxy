@@ -12,6 +12,7 @@
     - git-core
     - unzip
     - curl
+    - tree
 
 - name: configure SSHD (port)
   lineinfile: dest=/etc/ssh/sshd_config
