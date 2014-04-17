@@ -29,6 +29,22 @@ I may use ansible's `local_action` to perform the setup in the future ;)
 
 *It is not possible to selectively install roles at the moment, sorry.*
 
+### Dependencies
+
+Each role's README lists its dependencies. Here is a full list:
+
+* laggyluke.add-ssh-keys-from-github
+* Ansibles.apt
+* Ansibles.build-essential
+* Ansibles.git
+* Ansibles.hostname
+* Ansibles.monit
+* Ansibles.mysql
+* Ansibles.nginx
+* Ansibles.perl
+* knopki.sudoers
+* nbz4live.php-fpm
+
 ### Bootstrapping a project
 
 TODO: rename `setup` to `install`; create `new`, receiving the project's path
