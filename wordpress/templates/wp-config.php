@@ -90,5 +90,8 @@ define('WP_DEBUG_DISPLAY', false);
 if ( !defined('ABSPATH') )
 	define('ABSPATH', dirname(__FILE__) . '/');
 
+/* Allow direct updates. */
+define('FS_METHOD','direct');
+
 /** Réglage des variables de WordPress et de ses fichiers inclus. */
 require_once(ABSPATH . 'wp-settings.php');
