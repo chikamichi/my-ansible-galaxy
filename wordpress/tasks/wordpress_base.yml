@@ -28,9 +28,9 @@
 - name: Wordpress | Sets folders/files rights
   shell: "{{item}} chdir=/srv/www/wordpress"
   with_items:
-    - "chown {{ansible_ssh_user}} -R *"
+    - "chown {{ansible_ssh_user}}:www-data -R *"
     - "chmod 755 -R *"
-    - "chmod 644 wp-content/index.php"
+    - "chmod 644 wp-admin/index.php"
 
 - name: Wordpress | Fetch random salts for the config file
   local_action: command curl https://api.wordpress.org/secret-key/1.1/salt/
