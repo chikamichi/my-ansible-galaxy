@@ -12,3 +12,9 @@
 
 - name: Wordpress | Plugins | Install plugins
   command: chdir=/srv/www/wordpress/wp-content/plugins unzip -qo *.zip
+
+- name: Wordpress | Plugins | Sets folders/files rights
+  shell: "{{item}} chdir=/srv/www/wordpress/wp-content/plugins"
+  with_items:
+    - "chown {{ansible_ssh_user}}:www-data -R *"
+    - "chmod 755 -R *"

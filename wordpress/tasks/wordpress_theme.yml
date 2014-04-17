@@ -45,6 +45,12 @@
   with_items:
     - /srv/www/wordpress/wp-content/themes/{{wp_theme_name}}.base
 
+- name: Wordpress | Theme | Sets folders/files rights
+  shell: "{{item}} chdir=/srv/www/wordpress/wp-content/themes"
+  with_items:
+    - "chown {{ansible_ssh_user}}:www-data -R *"
+    - "chmod 755 -R *"
+
 - name: Wordpress | Theme | Cleanup themes folder (1)
   file: path=/srv/www/wordpress/wp-content/themes/{{wp_theme_base_name}} state=absent
 
