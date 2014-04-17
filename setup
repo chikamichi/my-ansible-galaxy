@@ -1,11 +1,12 @@
 #!/bin/bash
 
 SOURCE="."
-DEST=$HOME/"/ansible/roles"
+DEST=$HOME"/ansible/roles"
 
 for dir in $(find $SOURCE -mindepth 1 -maxdepth 1 -type d -not -path '*/\.*' )
 do
-  rm -f $DEST/${dir##*/}
+  echo "$DEST/chikamichi.${dir##*/}"
+  rm -f "$DEST/${dir##*/}"
   ln -s `pwd`/${dir##*/} $DEST/chikamichi.${dir##*/}
 done
 
